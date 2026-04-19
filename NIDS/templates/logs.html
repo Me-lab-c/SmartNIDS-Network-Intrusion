@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartNIDS – Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="logo">SmartNIDS</h2>
+        <p class="tagline">System Logs</p>
+
+        <ul class="menu">
+            <li><a href="/">📊 Dashboard</a></li>
+            <li><a href="/threats">🚨 Threats</a></li>
+            <li><a href="/analytics">📈 Analytics</a></li>
+            <li class="active"><a href="/logs">📜 Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <header class="topbar">
+            <span>Detection Logs</span>
+            <span class="admin">Admin</span>
+        </header>
+
+        <div class="content">
+
+            <h1>Complete Detection History</h1>
+
+            {% if logs %}
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Prediction</th>
+                        <th>Severity</th>
+                        <th>Attack Pattern</th>
+                        <th>Model Used</th>
+                    </tr>
+
+                    {% for row in logs %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+
+                        <td class="{{ 'attack' if 'Attack' in row[1] else 'safe' }}">
+                            {{ row[1] }}
+                        </td>
+
+                        <td>
+                            {{ row[3] }}
+                        </td>
+
+                        <td>
+                            {{ row[4] }}
+                        </td>
+
+                        <td>
+                            {{ row[2] }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+            {% else %}
+                <p>No logs available.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

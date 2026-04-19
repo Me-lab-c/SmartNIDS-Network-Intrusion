@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartNIDS – Threat Intelligence</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="logo">SmartNIDS</h2>
+        <p class="tagline">Threat Intelligence</p>
+
+        <ul class="menu">
+            <li><a href="/">📊 Dashboard</a></li>
+            <li class="active"><a href="/threats">🚨 Threats</a></li>
+            <li><a href="/analytics">📈 Analytics</a></li>
+            <li><a href="/logs">📜 Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <header class="topbar">
+            <span>Threat Monitoring</span>
+            <span class="admin">Admin</span>
+        </header>
+
+        <div class="content">
+
+            <h1>Active & Historical Threats</h1>
+
+            {% if logs %}
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Prediction</th>
+                        <th>Severity</th>
+                        <th>Attack Pattern</th>
+                    </tr>
+
+                    {% for row in logs %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+
+                        <td class="attack">
+                            {{ row[1] }}
+                        </td>
+
+                        <td class="
+                            {% if row[2] == 'High' %}
+                                severity-high
+                            {% elif row[2] == 'Medium' %}
+                                severity-medium
+                            {% elif row[2] == 'Low' %}
+                                severity-low
+                            {% endif %}
+                        ">
+                            {{ row[2] }}
+                        </td>
+
+                        <td>
+                            {{ row[3] }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+            {% else %}
+                <p>No threats detected yet.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

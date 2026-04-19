@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartNIDS – Advanced Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h2 class="logo">SmartNIDS</h2>
+    <ul class="menu">
+        <li><a href="/">📊 Dashboard</a></li>
+        <li><a href="/threats">🚨 Threats</a></li>
+        <li class="active"><a href="/analytics">📈 Analytics</a></li>
+        <li><a href="/logs">📜 Logs</a></li>
+    </ul>
+</aside>
+
+<div class="main">
+<header class="topbar">
+    <span>Advanced Security Intelligence</span>
+    <span class="admin">Admin</span>
+</header>
+
+<div class="content">
+
+<h1>Security Insights</h1>
+
+<div class="analytics-grid">
+
+<div class="chart-card">
+<h3>Severity Distribution</h3>
+<canvas id="severityChart"></canvas>
+</div>
+
+<div class="chart-card">
+<h3>Attack Pattern</h3>
+<canvas id="patternChart"></canvas>
+</div>
+
+<div class="chart-card">
+<h3>Last 24 Hours Attacks</h3>
+<canvas id="timeChart"></canvas>
+</div>
+
+<div class="chart-card">
+<h3>Risk Score (Last Hour)</h3>
+<canvas id="riskGauge"></canvas>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+new Chart(document.getElementById("severityChart"), {
+type: "pie",
+data: {
+labels: ["Low","Medium","High"],
+datasets: [{
+data: [
+{{ severity_data.Low }},
+{{ severity_data.Medium }},
+{{ severity_data.High }}
+],
+backgroundColor: ["#00ff99","#ffcc00","#ff4d4d"]
+}]
+},
+options: { animation: { duration: 2000 } }
+});
+
+new Chart(document.getElementById("patternChart"), {
+type: "bar",
+data: {
+labels: ["Single","Repeated","Continuous"],
+datasets: [{
+data: [
+{{ pattern_data["Single Attack"] }},
+{{ pattern_data["Repeated Attack"] }},
+{{ pattern_data["Continuous Attack Pattern"] }}
+],
+backgroundColor: ["#00d4ff","#ff9f43","#ff4d4d"]
+}]
+}
+});
+
+new Chart(document.getElementById("timeChart"), {
+type: "line",
+data: {
+labels: {{ hours }},
+datasets: [{
+label: "Attacks",
+data: {{ attack_counts }},
+borderColor: "#7f5cff",
+fill: false
+}]
+}
+});
+
+new Chart(document.getElementById("riskGauge"), {
+type: "doughnut",
+data: {
+labels: ["Risk","Safe"],
+datasets: [{
+data: [{{ risk_score }}, 100 - {{ risk_score }}],
+backgroundColor: ["#ff4d4d","#1e1e2f"]
+}]
+},
+options: { circumference: 180, rotation: 270 }
+});
+
+</script>
+
+</body>
+</html>

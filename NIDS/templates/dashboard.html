@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <title>SmartNIDS – SOC Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="logo">SmartNIDS</h2>
+        <p class="tagline">Real-time Threat Intelligence</p>
+
+        <ul class="menu">
+            <li class="active"><a href="/">📊 Dashboard</a></li>
+            <li><a href="/threats">🚨 Threats</a></li>
+            <li><a href="/analytics">📈 Analytics</a></li>
+            <li><a href="/logs">📜 Logs</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <header class="topbar">
+            <span>Security Operations Center</span>
+            <span class="admin">Admin</span>
+        </header>
+
+        <div class="content">
+
+            <h1>Live Intrusion Detection</h1>
+
+            <!-- DETECTION INPUT -->
+            <div class="card">
+                <h2>Manual Network Log Detection</h2>
+                <form method="POST" class="detect-form">
+                    <textarea name="features"
+                        placeholder="Paste NSL-KDD row here..."
+                        required></textarea>
+
+                    <div class="btn-center">
+                        <button type="submit" class="detect-btn">
+                            🚀 Detect Threat
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RESULT SECTION -->
+            {% if prediction %}
+            <div class="result-highlight">
+
+                <h2>Detection Result</h2>
+
+                <div class="prediction-box {{ 'attack-box' if 'Attack' in prediction else 'safe-box' }}">
+                    {{ prediction }}
+                </div>
+
+                <div class="badge-row">
+                    {% if severity %}
+                        <span class="severity-badge">{{ severity }}</span>
+                    {% endif %}
+
+                    {% if attack_pattern %}
+                        <span class="pattern-badge">{{ attack_pattern }}</span>
+                    {% endif %}
+                </div>
+
+                {% if rf_conf and xgb_conf %}
+                <div class="confidence-box">
+                    <p><strong>Random Forest:</strong> {{ rf_conf }}%</p>
+                    <p><strong>XGBoost:</strong> {{ xgb_conf }}%</p>
+                </div>
+
+                <!-- MODEL COMPARISON GRAPH -->
+                <div class="model-card">
+                    <h3>Model Comparison</h3>
+                    <canvas id="confidenceChart" height="120"></canvas>
+                </div>
+                {% endif %}
+
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<!-- GRAPH SCRIPT -->
+{% if rf_conf and xgb_conf %}
+<script>
+new Chart(document.getElementById("confidenceChart"), {
+    type: "bar",
+    data: {
+        labels: ["Random Forest", "XGBoost"],
+        datasets: [{
+            label: "Confidence (%)",
+            data: {{ [rf_conf, xgb_conf] | tojson }},
+            backgroundColor: ["#ff9f43", "#54a0ff"]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100
+            }
+        }
+    }
+});
+</script>
+{% endif %}
+
+<!-- 🚨 PREMIUM ALERT SYSTEM -->
+{% if prediction and 'Attack' in prediction %}
+<script>
+
+    // 🔊 Alarm
+    var alarm = new Audio("{{ url_for('static', filename='alarm.wav') }}");
+    alarm.loop = true;
+    alarm.play();
+
+    // 🚨 Screen Flash
+    document.body.classList.add("danger-flash");
+
+    // 🚨 SweetAlert Popup
+    Swal.fire({
+        icon: 'error',
+        title: '🚨 INTRUSION DETECTED',
+        html: `
+            <b>Severity:</b> {{ severity }} <br>
+            <b>Pattern:</b> {{ attack_pattern }}
+        `,
+        background: '#1e0000',
+        color: '#fff',
+        confirmButtonColor: '#ff0000',
+        confirmButtonText: 'STOP ALERT'
+    }).then(() => {
+        alarm.pause();
+        alarm.currentTime = 0;
+        document.body.classList.remove("danger-flash");
+    });
+
+</script>
+{% endif %}
+
+</body>
+</html>

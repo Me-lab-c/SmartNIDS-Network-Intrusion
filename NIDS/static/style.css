@@ -1,0 +1,296 @@
+/* ============================= */
+/* SMARTNIDS PREMIUM SOC THEME  */
+/* ============================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #1a1a2e, #16213e);
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* ================= Layout ================= */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= Sidebar ================= */
+
+.sidebar {
+    width: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding: 25px;
+    transition: 0.3s;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #7f5cff;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin-bottom: 15px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #ccc;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu li a:hover {
+    background: #7f5cff;
+    color: #000;
+    transform: translateX(5px);
+}
+
+.menu li.active a {
+    background: linear-gradient(90deg,#7f5cff,#00d4ff);
+    color: #000;
+    font-weight: bold;
+}
+
+/* ================= Main ================= */
+
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar span {
+    font-weight: 600;
+}
+
+.admin {
+    background: rgba(255,255,255,0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* ================= Cards ================= */
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* ================= Textarea ================= */
+
+textarea {
+    width: 100%;
+    height: 120px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #fff;
+    padding: 15px;
+    resize: none;
+}
+
+/* ================= Button ================= */
+
+.btn-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.detect-btn {
+    padding: 14px 40px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(90deg,#7f5cff,#00d4ff);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.detect-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #7f5cff;
+}
+
+/* ================= Prediction Highlight ================= */
+
+.result-highlight {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.prediction-box {
+    font-size: 22px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: inline-block;
+}
+.attack-box {
+    background: rgba(255, 60, 60, 0.15);
+    border: 1px solid #ff3c3c;
+    box-shadow: none;
+}
+
+
+.safe-box {
+    background: rgba(0, 200, 120, 0.15);
+    border: 1px solid #00c878;
+    box-shadow: none;
+}
+
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px red; }
+    50% { box-shadow: 0 0 30px red; }
+    100% { box-shadow: 0 0 10px red; }
+}
+
+/* ================= Badges ================= */
+
+.badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.severity-badge,
+.pattern-badge {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    background: linear-gradient(90deg,#ff9f43,#ff6b6b);
+    color: #000;
+    font-weight: 600;
+}
+
+/* ================= Tables ================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: rgba(255,255,255,0.1);
+    padding: 12px;
+}
+
+td {
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    text-align: center;
+}
+
+tr:hover td {
+    background: rgba(127,92,255,0.2);
+}
+
+/* ================= Scrollbar ================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7f5cff;
+    border-radius: 5px;
+}
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.chart-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    padding: 20px;
+    height: 350px;
+}
+
+.chart-card canvas {
+    max-height: 250px !important;
+}
+.analytics-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 25px;
+margin-top: 30px;
+}
+
+.chart-card {
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(15px);
+border-radius: 15px;
+padding: 20px;
+height: 350px;
+}
+
+.chart-card canvas {
+max-height: 250px !important;
+}
+.model-card {
+    max-width: 450px;
+    margin: 20px auto;
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+#confidenceChart {
+    max-height: 180px !important;
+}
+/* 🚨 DANGER FLASH EFFECT */
+@keyframes flash {
+    0% { background-color: #0b0617; }
+    50% { background-color: #2b0000; }
+    100% { background-color: #0b0617; }
+}
+
+.danger-flash {
+    animation: flash 0.6s infinite;
+}
+
